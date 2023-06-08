@@ -8,7 +8,6 @@ def random_celeb():
     return random.choice([st.balloons()])
 
 # Function to download YouTube single videos
-# Function to download YouTube single videos
 def video(url):
     video_caller = YouTube(url)
     st.info(video_caller.title, icon="ℹ️")
@@ -54,6 +53,10 @@ def video(url):
         # Provide download link for the merged file
         with open(output_file, 'rb') as file:
             st.download_button('Download Video', file, file_name=output_file)
+        
+        # Provide download link for the audio file
+        with open(audio_file, 'rb') as file:
+            st.download_button('Download Audio', file, file_name=audio_file)
         
         # Delete temporary files
         os.remove(video_file)
