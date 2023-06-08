@@ -11,18 +11,26 @@ video_url = st.text_input("Enter YouTube video URL:", "")
 if st.button("Download"):
     if video_url:
         try:
-            st.info("Downloading video... Please wait.")
+            st.info("Fetching video information... Please wait.")
             
             # Create a YouTube object
             yt = YouTube(video_url)
 
-            # Get the highest resolution stream
-            stream = yt.streams.get_highest_resolution()
+            # Get video details
+            video_title = yt.title
+            video_thumbnail = yt.thumbnail_url
+            video_author = yt.author
+            video_duration = yt.length
 
-            # Download the video
-            stream.download()
+            st.subheader("Video Details")
+            st.write("Title:", video_title)
+            st.write("Author:", video_author)
+            st.write("Duration:", video_duration, "seconds")
+            st.image(video_thumbnail, use_column_width=True)
 
-            st.success("Video downloaded successfully!")
+            # Provide download link
+            st.subheader("Download")
+            st.write(f"[Download {video_title}](https://www.youtube.com/watch?v={yt.video_id})")
         
         except Exception as e:
             st.error(f"An error occurred: {str(e)}")
