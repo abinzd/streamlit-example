@@ -8,6 +8,7 @@ def random_celeb():
     return random.choice([st.balloons()])
 
 # Function to download YouTube single videos
+# Function to download YouTube single videos
 def video(url):
     video_caller = YouTube(url)
     st.info(video_caller.title, icon="ℹ️")
@@ -31,12 +32,36 @@ def video(url):
     selected_stream = resolution_dict.get(resolution)
 
     if selected_stream is not None:
-        selected_stream.download()
+        # Display audio options
+        audio_streams = video_caller.streams.filter(only_audio=True).order_by('abr').desc()
+        audio_formats = [stream.abr for stream in audio_streams]
+        audio_format = st.selectbox("Select Audio Format", audio_formats)
+
+        # Find the selected audio stream based on the format string
+        selected_audio_stream = audio_streams[audio_formats.index(audio_format)]
+
+        # Download video and audio
+        selected_stream.download(filename_prefix='video_')
+        selected_audio_stream.download(filename_prefix='audio_')
         st.success('Done!')
-        with open(selected_stream.default_filename, 'rb') as file:
-            st.download_button('Download Video', file, file_name=selected_stream.default_filename + '.mp4')
+
+        # Merge video and audio files
+        video_file = f'video_{selected_stream.default_filename}'
+        audio_file = f'audio_{selected_audio_stream.default_filename}'
+        output_file = f'merged_{selected_stream.default_filename}'
+        os.system(f'ffmpeg -i "{video_file}" -i "{audio_file}" -c:v copy -c:a aac "{output_file}"')
+
+        # Provide download link for the merged file
+        with open(output_file, 'rb') as file:
+            st.download_button('Download Video', file, file_name=output_file)
+        
+        # Delete temporary files
+        os.remove(video_file)
+        os.remove(audio_file)
+        os.remove(output_file)
     else:
         st.error('Oops! Stream is not available!')
+
 
 # Function for downloading YouTube playlist
 def playlist(url):
