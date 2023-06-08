@@ -28,11 +28,25 @@ if st.button("Download"):
             st.write("Duration:", video_duration, "seconds")
             st.image(video_thumbnail, use_column_width=True)
 
-            # Provide download link
+            # Provide download link and button
             st.subheader("Download")
-            st.write(f"[Download {video_title}](https://www.youtube.com/watch?v={yt.video_id})")
+            download_link = f"[Download {video_title}](https://www.youtube.com/watch?v={yt.video_id})"
+            st.markdown(download_link, unsafe_allow_html=True)
+            st.write("")
+            st.button("Click to Download", key='download_button', on_click=lambda: download_video(video_url))
         
         except Exception as e:
             st.error(f"An error occurred: {str(e)}")
     else:
         st.warning("Please enter a valid YouTube video URL.")
+
+# Function to initiate download
+def download_video(video_url):
+    try:
+        st.info("Downloading video... Please wait.")
+        yt = YouTube(video_url)
+        stream = yt.streams.get_highest_resolution()
+        stream.download()
+        st.success("Video downloaded successfully!")
+    except Exception as e:
+        st.error(f"An error occurred: {str(e)}")
