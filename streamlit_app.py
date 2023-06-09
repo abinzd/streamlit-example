@@ -1,8 +1,6 @@
-from flask import Flask, render_template, request
+import streamlit as st
 import requests
 from bs4 import BeautifulSoup
-
-app = Flask(__name__)
 
 def get_product_price_amazon(product_url):
     headers = {
@@ -26,22 +24,21 @@ def get_product_price_flipkart(product_url):
     else:
         return 'Price not available'
 
-@app.route('/', methods=['GET', 'POST'])
-def index():
-    if request.method == 'POST':
-        product_url = request.form['product_url']
-        website_choice = int(request.form['website_choice'])
+def main():
+    st.title("Price Checker")
+    st.write("Welcome to the Price Checker!")
+    product_url = st.text_input("Enter the URL of the product:")
+    website_choice = st.selectbox("Select the website:", ['Amazon', 'Flipkart'])
 
-        if website_choice == 1:
+    if st.button("Check Price"):
+        if website_choice == 'Amazon':
             product_price = get_product_price_amazon(product_url)
-            return render_template('result.html', price=product_price, website='Amazon')
-        elif website_choice == 2:
+            st.write('Amazon Price:', product_price)
+        elif website_choice == 'Flipkart':
             product_price = get_product_price_flipkart(product_url)
-            return render_template('result.html', price=product_price, website='Flipkart')
+            st.write('Flipkart Price:', product_price)
         else:
-            return "Invalid choice. Please try again."
-
-    return render_template('index.html')
+            st.write('Invalid choice. Please try again.')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    main()
