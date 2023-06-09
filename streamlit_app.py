@@ -15,11 +15,11 @@ def get_subscriber_count():
             id=YOUTUBE_CHANNEL_ID
         ).execute()
 
-        if 'items' in response:
-            items = response['items']
-            if len(items) > 0:
-                subscriber_count = int(items[0]['statistics']['subscriberCount'])
-                return subscriber_count
+        items = response.get('items', [])
+        if len(items) > 0:
+            statistics = items[0]['statistics']
+            subscriber_count = int(statistics['subscriberCount'])
+            return subscriber_count
 
         st.error('No channel data found in the API response.')
         return None
@@ -27,6 +27,7 @@ def get_subscriber_count():
     except HttpError as e:
         st.error(f"An error occurred: {e}")
         return None
+
 
 
 # Streamlit app
