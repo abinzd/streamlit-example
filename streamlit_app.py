@@ -9,11 +9,12 @@ youtube = build('youtube', 'v3', developerKey=API_KEY)
 
 # Function to extract channel ID from YouTube link
 def extract_channel_id(link):
-    pattern = r"(?<=channel\/|user\/|u\/|embed\/|v=|watch\?v=|&v=|youtu.be\/|\/v\/|\/e\/|watch\?v%3D|watch\?feature=player_embedded&v=|%2Fvideos%2F|embed%\?video_id=|youtube.com\/user\/[^#]*#([^\/]*\/)*)[^&#\?\/\n]*"
+    pattern = r"(?:(?:https?:\/\/)?(?:www\.)?youtube\.com\/(?:c\/|channel\/|user\/))([^\/\?\&\n]{11})"
     match = re.search(pattern, link)
     if match:
-        return match.group()
+        return match.group(1)
     return None
+
 
 # Function to get the subscriber count
 def get_subscriber_count(channel_id):
