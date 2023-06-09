@@ -4,7 +4,7 @@ from googleapiclient.errors import HttpError
 
 # Set up the YouTube Data API
 API_KEY = 'AIzaSyBIPX1w8_nZA-TIj6s1cFhwuOkTVADW0Bo'
-YOUTUBE_CHANNEL_ID = 'tseries'
+YOUTUBE_CHANNEL_ID = 'Vandipranthan'
 youtube = build('youtube', 'v3', developerKey=API_KEY)
 
 # Function to get the subscriber count
