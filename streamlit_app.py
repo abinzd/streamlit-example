@@ -3,8 +3,8 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
 # Set up the YouTube Data API
-API_KEY = 'YOUR_YOUTUBE_API_KEY'
-YOUTUBE_CHANNEL_ID = 'YOUR_YOUTUBE_CHANNEL_ID'
+API_KEY = 'AIzaSyBIPX1w8_nZA-TIj6s1cFhwuOkTVADW0Bo'
+YOUTUBE_CHANNEL_ID = 'tseries'
 youtube = build('youtube', 'v3', developerKey=API_KEY)
 
 # Function to get the subscriber count
