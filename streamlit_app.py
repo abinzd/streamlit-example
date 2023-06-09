@@ -28,17 +28,9 @@ def get_subscriber_count():
         st.error(f"An error occurred: {e}")
         return None
 
-
-
 # Streamlit app
 st.title('Real-time YouTube Subscribers')
 subscriber_count = get_subscriber_count()
 
 if subscriber_count is not None:
     st.write(f"Subscriber count: {subscriber_count}")
-
-# Run the Streamlit app
-# Run the Streamlit app
-if __name__ == '__main__':
-    st.run()
-
