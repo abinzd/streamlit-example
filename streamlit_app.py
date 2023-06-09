@@ -24,6 +24,8 @@ def get_subscriber_count(channel_id):
             id=channel_id
         ).execute()
 
+        print(response)  # Print the response for debugging purposes
+
         items = response.get('items', [])
         if len(items) > 0:
             statistics = items[0]['statistics']
@@ -36,6 +38,7 @@ def get_subscriber_count(channel_id):
     except HttpError as e:
         st.error(f"An error occurred: {e}")
         return None
+
 
 # Streamlit app
 st.title('Real-time YouTube Subscribers')
