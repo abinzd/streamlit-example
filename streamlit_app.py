@@ -39,4 +39,4 @@ if subscriber_count is not None:
 
 # Run the Streamlit app
 if __name__ == '__main__':
-    st.run_app()
+    streamlit.run()
