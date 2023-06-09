@@ -1,5 +1,8 @@
+from flask import Flask, render_template, request
 import requests
 from bs4 import BeautifulSoup
+
+app = Flask(__name__)
 
 def get_product_price_amazon(product_url):
     headers = {
@@ -23,24 +26,22 @@ def get_product_price_flipkart(product_url):
     else:
         return 'Price not available'
 
-# User interface
-print("Welcome to the Price Checker!")
-print("Please enter the URL of the product:")
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    if request.method == 'POST':
+        product_url = request.form['product_url']
+        website_choice = int(request.form['website_choice'])
 
-product_url = input()
+        if website_choice == 1:
+            product_price = get_product_price_amazon(product_url)
+            return render_template('result.html', price=product_price, website='Amazon')
+        elif website_choice == 2:
+            product_price = get_product_price_flipkart(product_url)
+            return render_template('result.html', price=product_price, website='Flipkart')
+        else:
+            return "Invalid choice. Please try again."
 
-print("Select the website:")
-print("1. Amazon")
-print("2. Flipkart")
+    return render_template('index.html')
 
-website_choice = int(input())
-
-if website_choice == 1:
-    product_price = get_product_price_amazon(product_url)
-    print('Amazon Price:', product_price)
-elif website_choice == 2:
-    product_price = get_product_price_flipkart(product_url)
-    print('Flipkart Price:', product_price)
-else:
-    print('Invalid choice. Please try again.')
-
+if __name__ == '__main__':
+    app.run(debug=True)
