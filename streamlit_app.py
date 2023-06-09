@@ -23,12 +23,24 @@ def get_product_price_flipkart(product_url):
     else:
         return 'Price not available'
 
-# Example usage for Amazon
-amazon_product_url = 'https://www.amazon.com/dp/B07VGRJDFY/'
-amazon_price = get_product_price_amazon(amazon_product_url)
-print('Amazon Price:', amazon_price)
+# User interface
+print("Welcome to the Price Checker!")
+print("Please enter the URL of the product:")
 
-# Example usage for Flipkart
-flipkart_product_url = 'https://www.flipkart.com/apple-iphone-12-pro-max-silver-256-gb/p/itm2643019ff84b2'
-flipkart_price = get_product_price_flipkart(flipkart_product_url)
-print('Flipkart Price:', flipkart_price)
+product_url = input()
+
+print("Select the website:")
+print("1. Amazon")
+print("2. Flipkart")
+
+website_choice = int(input())
+
+if website_choice == 1:
+    product_price = get_product_price_amazon(product_url)
+    print('Amazon Price:', product_price)
+elif website_choice == 2:
+    product_price = get_product_price_flipkart(product_url)
+    print('Flipkart Price:', product_price)
+else:
+    print('Invalid choice. Please try again.')
+
