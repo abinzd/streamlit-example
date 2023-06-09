@@ -38,5 +38,7 @@ if subscriber_count is not None:
     st.write(f"Subscriber count: {subscriber_count}")
 
 # Run the Streamlit app
+# Run the Streamlit app
 if __name__ == '__main__':
-    streamlit.run()
+    st.run()
+
